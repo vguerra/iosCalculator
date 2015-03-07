@@ -12,7 +12,16 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
     var typingANumber : Bool = false;
-
+    var operandStack = Array<Double>()
+    var displayValue : Double {
+        get {
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+        }
+        set {
+            display.text = "\(newValue)"
+            typingANumber = false
+        }
+    }
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if typingANumber {
@@ -23,5 +32,12 @@ class ViewController: UIViewController {
          }
         println("digit = \(digit)")
     }
+    
+    @IBAction func enter() {
+        typingANumber = false
+        operandStack.append(displayValue)
+        println("operandStack = \(operandStack)")
+    }
+    
 }
 
