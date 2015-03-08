@@ -39,5 +39,51 @@ class ViewController: UIViewController {
         println("operandStack = \(operandStack)")
     }
     
+    @IBAction func operate(sender: UIButton) {
+        let operation = sender.currentTitle!
+        if typingANumber {
+            enter()
+        }
+        switch operation {
+        case "×": performOperation() { $0 * $1 }
+        case "÷": performOperation() { $1 / $0 }
+        case "+": performOperation() { $0 + $1 }
+        case "−": performOperation() { $1 - $0 }
+        case "√": performOperation() { sqrt($0) }
+        default: break
+        }
+    }
+    
+    func performOperation(operation: (Double, Double) -> Double) {
+        if operandStack.count >= 2 {
+            let lhs = operandStack.removeLast()
+            displayValue = operation(lhs, operandStack.removeLast())
+            enter()
+        }
+    }
+
+    func performOperation(operation: (Double) -> Double) {
+        if operandStack.count >= 1 {
+            displayValue = operation(operandStack.removeLast())
+            enter()
+        }
+    }
+    
+    func multipy(lop : Double, rop : Double) -> Double {
+        return lop * rop
+    }
+
+    func divide(lop : Double, rop : Double) -> Double {
+        return lop / rop
+    }
+    
+    func sum(lop : Double, rop : Double) -> Double {
+        return lop + rop
+    }
+    
+    func subs(lop : Double, rop : Double) -> Double {
+        return lop - rop
+    }
+    
 }
 
